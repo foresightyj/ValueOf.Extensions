@@ -1,55 +1,53 @@
-using System.ComponentModel;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using ValueOf.Extensions.NewtonsoftJson;
 
-namespace ValueOf.Extensions.Tests;
-
-[TypeConverter(typeof(ValueOfTypeConverter<string, ProductCode>))]
-public class ProductCode : ValueOf<string, ProductCode>
+namespace ValueOf.Extensions.Tests
 {
-    private static readonly Regex ValidPatt = new(@"^[A-Z][A-Z0-9_]*$");
-
-    protected override void Validate()
+    public class TestUser
     {
-        var productCode = Value;
-        if (string.IsNullOrEmpty(productCode)) throw new ArgumentNullException(nameof(productCode));
-        if (!ValidPatt.IsMatch(productCode))
-            throw new ArgumentException(nameof(productCode) + $" has invalid format, value: {Value}");
-    }
-}
-
-public class TestProductCode
-{
-    public required ProductCode Code { get; set; }
-}
-
-public class ValueOfTypeConverterTests
-{
-    private readonly TestProductCode _dut = new()
-    {
-        Code = ProductCode.From("IPAD_12"),
-    };
-
-    [Fact]
-    void SystemTextJsonSerialization_WorksWith_TypeConverterJsonAdapterFactory()
-    {
-        var incorrectJson = System.Text.Json.JsonSerializer.Serialize(_dut);
-        Assert.Equal("""{"Code":{"Value":"IPAD_12"}}""", incorrectJson);
-
-        var options = new JsonSerializerOptions();
-        options.Converters.Add(new TypeConverterJsonAdapterFactory());
-
-        var correctJson = System.Text.Json.JsonSerializer.Serialize(_dut, options);
-        Assert.Equal("""{"Code":"IPAD_12"}""", correctJson);
-        var d = System.Text.Json.JsonSerializer.Deserialize<TestProductCode>(correctJson, options)!;
-        Assert.Equal(d.Code, _dut.Code);
+        public required TestUserId Id { get; set; }
+        public required TestEmail Email { get; set; }
     }
 
-    [Fact]
-    void WorksWithNewtonsoftJsonAutomatically()
+    public class ValueOfTypeConverterTests
     {
-        Assert.Equal("\"IPAD_12\"", JsonConvert.SerializeObject(_dut.Code));
-        Assert.Equal("""{"Code":"IPAD_12"}""", JsonConvert.SerializeObject(_dut));
+        private readonly TestUser _dut = new()
+        {
+            Id = TestUserId.From(12),
+            Email = TestEmail.From("imyuanjian@gmail.com"),
+        };
+
+        [Fact]
+        void SystemTextJsonSerialization_WorksWith_TypeConverterJsonAdapterFactory()
+        {
+            var incorrectJson = System.Text.Json.JsonSerializer.Serialize(_dut);
+            Assert.Equal("""{"Id":{"Value":12},"Email":{"Value":"imyuanjian@gmail.com"}}""", incorrectJson);
+
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new ValueOfTypeConverterJsonAdapterFactory());
+
+            var correctJson = System.Text.Json.JsonSerializer.Serialize(_dut, options);
+            Assert.Equal("""{"Id":12,"Email":"imyuanjian@gmail.com"}""", correctJson);
+            var d = System.Text.Json.JsonSerializer.Deserialize<TestUser>(correctJson, options)!;
+            Assert.Equal(d.Email, _dut.Email);
+        }
+
+        [Fact]
+        void SystemTextJsonSerialization_WorksWith_ValueOfNewtonsoftConverter()
+        {
+            var settings = new JsonSerializerSettings()
+            {
+                Converters = [new ValueOfNewtonsoftConverter()],
+            };
+            Assert.Equal("12", JsonConvert.SerializeObject(_dut.Id, settings));
+            Assert.Equal("\"imyuanjian@gmail.com\"", JsonConvert.SerializeObject(_dut.Email, settings));
+            var json = JsonConvert.SerializeObject(_dut, settings);
+            const string expected = """{"Id":12,"Email":"imyuanjian@gmail.com"}""";
+            Assert.Equal(expected, json);
+            var d = JsonConvert.DeserializeObject<TestUser>(json, settings)!;
+            Assert.Equal(_dut.Email, d.Email);
+        }
     }
 }

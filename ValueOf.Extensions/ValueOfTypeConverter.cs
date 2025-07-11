@@ -1,40 +1,66 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 
-namespace ValueOf.Extensions;
-
-public class ValueOfTypeConverter<TValue, TThis> : TypeConverter where TThis : ValueOf<TValue, TThis>, new()
+namespace ValueOf.Extensions
 {
-    public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
+    public class ValueOfTypeConverter<TValue, TThis> : TypeConverter where TThis : ValueOf<TValue, TThis>, new()
     {
-        if (sourceType == typeof(TValue))
+        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         {
-            return true;
+            if (sourceType == typeof(TValue))
+            {
+                return true;
+            }
+
+            return base.CanConvertFrom(context, sourceType);
         }
 
-        return base.CanConvertFrom(context, sourceType);
-    }
-
-    public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
-    {
-        if (value is TValue tValue)
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            return ValueOf<TValue, TThis>.From(tValue);
+            var debug = $"{destinationType.Name} == {typeof(TValue).Name} when {typeof(TThis).Name}";
+            Console.WriteLine(debug);
+            if (destinationType == typeof(TValue))
+            {
+                return true;
+            }
+
+            if (typeof(TValue) == typeof(int) && destinationType == typeof(string)) return false;
+            // return false;
+            return base.CanConvertTo(context, destinationType);
         }
 
-        return base.ConvertFrom(context, culture, value);
-    }
-
-    public override object? ConvertTo(ITypeDescriptorContext? context, CultureInfo? culture, object? value,
-        Type destinationType)
-    {
-        if (value is null) return null;
-
-        if (destinationType == typeof(TValue))
+        public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         {
-            return ((TThis)value).Value;
+            if (value is TValue tValue)
+            {
+                return ValueOf<TValue, TThis>.From(tValue);
+            }
+
+            return base.ConvertFrom(context, culture, value);
         }
 
-        return base.ConvertTo(context, culture, value, destinationType);
+        public override object? ConvertTo(ITypeDescriptorContext? context, CultureInfo? culture, object? value,
+            Type destinationType)
+        {
+            if (value is null) return null;
+
+
+            if (destinationType == typeof(TValue))
+            {
+                return ((TThis)value).Value;
+            }
+
+            var typeofTValue = typeof(TValue);
+            var typeofTThis = typeof(TThis);
+
+            var val = (TThis)value;
+            var underlyingVal = val.Value;
+
+            Console.WriteLine($"{typeofTValue.Name} vs {typeofTThis.Name}: {underlyingVal}");
+
+            var converted = base.ConvertTo(context, culture, underlyingVal, destinationType);
+            return converted;
+        }
     }
 }

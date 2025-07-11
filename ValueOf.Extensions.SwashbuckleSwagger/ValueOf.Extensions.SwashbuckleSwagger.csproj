@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
-        <PackageId>ValueOf.Extensions</PackageId>
+        <PackageId>ValueOf.Extensions.SwashbuckleSwagger</PackageId>
         <Authors>Yuan Jian</Authors>
         <Copyright>Yuan Jian</Copyright>
         <Title>Extra goodies for ValueOf, including serialization for System.Text.Json, Newtonsoft.json</Title>
@@ -11,16 +11,15 @@
         <Nullable>enable</Nullable>
         <PackageProjectUrl>https://github.com/foresightyj/ValueOf.Extensions</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/foresightyj/ValueOf.Extensions/blob/master/LICENSE</PackageLicenseUrl>
-        <PackageTags>ValueOf, Value Object, ValueObject, DDD, Primitive Obsession, System.Text.Json</PackageTags>
+        <PackageTags>ValueOf, Value Object, ValueObject, DDD, Primitive Obsession, System.Text.Json, Swagger</PackageTags>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
-
     <ItemGroup>
-        <PackageReference Include="ValueOf" Version="2.0.31"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.6.2"/>
     </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-        <PackageReference Include="System.Text.Json" Version="8.0.0"/>
+    <ItemGroup>
+        <ProjectReference Include="..\ValueOf.Extensions\ValueOf.Extensions.csproj"/>
     </ItemGroup>
 </Project>

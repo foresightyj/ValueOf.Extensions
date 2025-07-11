@@ -4,6 +4,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValueOf.Extensions", "Value
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValueOf.Extensions.Tests", "ValueOf.Extensions.Tests\ValueOf.Extensions.Tests.csproj", "{13FEDA90-1316-4949-B9AD-65B7D2E22299}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValueOf.Extensions.Examples", "ValueOf.Extensions.Examples\ValueOf.Extensions.Examples.csproj", "{497FD2BB-71BD-444F-8DDA-526ABE4BCBED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValueOf.Extensions.SwashbuckleSwagger", "ValueOf.Extensions.SwashbuckleSwagger\ValueOf.Extensions.SwashbuckleSwagger.csproj", "{F858A156-03B9-4C42-84D4-DEA1F1A02C30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValueOf.Extensions.NewtonsoftJson", "ValueOf.Extensions.NewtonsoftJson\ValueOf.Extensions.NewtonsoftJson.csproj", "{C1B26843-625E-4F1D-BA8B-035B96D5CBE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +24,17 @@ Global
 		{13FEDA90-1316-4949-B9AD-65B7D2E22299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13FEDA90-1316-4949-B9AD-65B7D2E22299}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13FEDA90-1316-4949-B9AD-65B7D2E22299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{497FD2BB-71BD-444F-8DDA-526ABE4BCBED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{497FD2BB-71BD-444F-8DDA-526ABE4BCBED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{497FD2BB-71BD-444F-8DDA-526ABE4BCBED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{497FD2BB-71BD-444F-8DDA-526ABE4BCBED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F858A156-03B9-4C42-84D4-DEA1F1A02C30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F858A156-03B9-4C42-84D4-DEA1F1A02C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F858A156-03B9-4C42-84D4-DEA1F1A02C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F858A156-03B9-4C42-84D4-DEA1F1A02C30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1B26843-625E-4F1D-BA8B-035B96D5CBE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1B26843-625E-4F1D-BA8B-035B96D5CBE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1B26843-625E-4F1D-BA8B-035B96D5CBE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B26843-625E-4F1D-BA8B-035B96D5CBE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
