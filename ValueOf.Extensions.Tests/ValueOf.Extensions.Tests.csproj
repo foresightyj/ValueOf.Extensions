@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ValueOf.Extensions.NewtonsoftJson\ValueOf.Extensions.NewtonsoftJson.csproj" />
+        <ProjectReference Include="..\ValueOf.Extensions.NewtonsoftJson\ValueOf.Extensions.NewtonsoftJson.csproj"/>
         <ProjectReference Include="..\ValueOf.Extensions\ValueOf.Extensions.csproj"/>
     </ItemGroup>
 

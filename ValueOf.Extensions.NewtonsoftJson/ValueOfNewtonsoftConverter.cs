@@ -9,6 +9,21 @@ namespace ValueOf.Extensions.NewtonsoftJson
 {
     public sealed class ValueOfNewtonsoftConverter : JsonConverter
     {
+        private static class WrapperUnwrapper<TValue, TThis> where TThis : ValueOf<TValue, TThis>, new()
+        {
+            public static object Wrap(object obj)
+            {
+                var val = (TValue)obj;
+                return ValueOf<TValue, TThis>.From(val);
+            }
+
+            public static object Unwrap(object obj)
+            {
+                var val = (TThis)obj;
+                return val.Value;
+            }
+        }
+
         private readonly ConcurrentDictionary<Type, (Type underlyingType, Func<object, object> wrapValueOf,
             Func<object, object> unwrapValueOf)> _cache =
             new ConcurrentDictionary<Type, (Type underlyingType, Func<object, object> wrapValueOf, Func<object, object>
@@ -26,43 +41,19 @@ namespace ValueOf.Extensions.NewtonsoftJson
 
             Debug.Assert(underlyingType != null, nameof(underlyingType) + " != null");
 
+            var wrapperType = typeof(WrapperUnwrapper<,>).MakeGenericType(underlyingType, valueOfType);
 
-            return (underlyingType, makeWrapValueOfFunc(valueOfType, underlyingType),
-                makeUnwrapValueOfFunc(valueOfType, underlyingType));
-        }
+            var wrapMethodInfo = wrapperType.GetMethod("Wrap", BindingFlags.Static | BindingFlags.Public);
+            Debug.Assert(wrapMethodInfo != null, nameof(wrapMethodInfo) + " != null");
 
-        private static Func<object, object> makeWrapValueOfFunc(Type valueOfType, Type underlyingType)
-        {
-            //build a Func<object, object> dynamically where the input object of underlyingType and the returned object is of valueOfType
-            var input = Expression.Parameter(typeof(object), "input");
-            Expression converted = Expression.Convert(input, underlyingType);
+            var unwrapMethodInfo = wrapperType.GetMethod("Unwrap", BindingFlags.Static | BindingFlags.Public);
+            Debug.Assert(unwrapMethodInfo != null, nameof(unwrapMethodInfo) + " != null");
+            var wrapMethod =
+                (Func<object, object>)Delegate.CreateDelegate(typeof(Func<object, object>), wrapMethodInfo);
+            var unwrapMethod =
+                (Func<object, object>)Delegate.CreateDelegate(typeof(Func<object, object>), unwrapMethodInfo);
 
-            var fromMethod = valueOfType.GetMethod("From",
-                BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy);
-            if (fromMethod == null)
-            {
-                throw new InvalidOperationException($"From method not found in type: {valueOfType.FullName}");
-            }
-
-            var call = Expression.Call(null, fromMethod, converted);
-            var output = Expression.Convert(call, typeof(object));
-            var lambda = Expression.Lambda<Func<object, object>>(output, input);
-            var wrapValueOf = lambda.Compile();
-            return wrapValueOf;
-        }
-
-        private static Func<object, object> makeUnwrapValueOfFunc(Type valueOfType, Type underlyingType)
-        {
-            //build a Func<object, object> dynamically where the input object of underlyingType and the returned object is of valueOfType
-            var input = Expression.Parameter(typeof(object), "input");
-            Expression converted = Expression.Convert(input, valueOfType);
-            var valueProp = valueOfType.GetProperty("Value", BindingFlags.Public | BindingFlags.Instance);
-            Debug.Assert(valueProp != null, nameof(valueProp) + " != null");
-            var value = Expression.Call(converted, valueProp.GetGetMethod());
-            var output = Expression.Convert(value, typeof(object));
-            var lambda = Expression.Lambda<Func<object, object>>(output, input);
-            var unwrapValueOf = lambda.Compile();
-            return unwrapValueOf;
+            return (underlyingType, wrapMethod, unwrapMethod);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
