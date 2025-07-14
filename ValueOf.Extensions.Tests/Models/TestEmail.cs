@@ -1,9 +1,7 @@
-using System.ComponentModel;
 using System.Text.RegularExpressions;
 
-namespace ValueOf.Extensions.Tests;
+namespace ValueOf.Extensions.Tests.Models;
 
-[TypeConverter(typeof(ValueOfTypeConverter<string, TestEmail>))]
 public class TestEmail : ValueOf<string, TestEmail>
 {
     private static readonly Regex EmailPatt = new(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");

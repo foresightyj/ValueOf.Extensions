@@ -1,8 +1,5 @@
-using System.ComponentModel;
+namespace ValueOf.Extensions.Tests.Models;
 
-namespace ValueOf.Extensions.Tests;
-
-[TypeConverter(typeof(ValueOfTypeConverter<int, TestUserId>))]
 public sealed class TestUserId : ValueOf<int, TestUserId>
 {
     protected override void Validate()

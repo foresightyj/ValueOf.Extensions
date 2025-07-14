@@ -32,7 +32,7 @@ namespace ValueOf.Extensions.NewtonsoftJson
         public override bool CanConvert(Type objectType) => objectType.IsValueOfType(out _);
 
         private static (Type underlyingType, Func<object, object> wrapValueOf, Func<object, object> unwrapValueOf)
-            cacheValueFactory(Type valueOfType)
+            CacheValueFactory(Type valueOfType)
         {
             if (!valueOfType.IsValueOfType(out var underlyingType))
             {
@@ -59,7 +59,7 @@ namespace ValueOf.Extensions.NewtonsoftJson
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
             JsonSerializer serializer)
         {
-            var (underlyingType, wrapValueOf, _) = _cache.GetOrAdd(objectType, cacheValueFactory);
+            var (underlyingType, wrapValueOf, _) = _cache.GetOrAdd(objectType, CacheValueFactory);
             var value = serializer.Deserialize(reader, underlyingType);
             return wrapValueOf(value);
         }
@@ -67,7 +67,7 @@ namespace ValueOf.Extensions.NewtonsoftJson
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             Debug.Assert(value != null, nameof(value) + " != null");
-            var (underlyingType, _, unwrapValueOf) = _cache.GetOrAdd(value.GetType(), cacheValueFactory);
+            var (underlyingType, _, unwrapValueOf) = _cache.GetOrAdd(value.GetType(), CacheValueFactory);
             var unwrapped = unwrapValueOf(value);
             serializer.Serialize(writer, unwrapped);
         }

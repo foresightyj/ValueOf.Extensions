@@ -4,11 +4,11 @@ using System.Globalization;
 
 namespace ValueOf.Extensions
 {
-    public class ValueOfTypeConverter<TValue, TThis> : TypeConverter where TThis : ValueOf<TValue, TThis>, new()
+    public class ValueOfTypeConverter<TU, T> : TypeConverter where T : ValueOf<TU, T>, new()
     {
         public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         {
-            if (sourceType == typeof(TValue))
+            if (sourceType == typeof(TU))
             {
                 return true;
             }
@@ -18,23 +18,23 @@ namespace ValueOf.Extensions
 
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            var debug = $"{destinationType.Name} == {typeof(TValue).Name} when {typeof(TThis).Name}";
+            var debug = $"{destinationType.Name} == {typeof(TU).Name} when {typeof(T).Name}";
             Console.WriteLine(debug);
-            if (destinationType == typeof(TValue))
+            if (destinationType == typeof(TU))
             {
                 return true;
             }
 
-            if (typeof(TValue) == typeof(int) && destinationType == typeof(string)) return false;
+            if (typeof(TU) == typeof(int) && destinationType == typeof(string)) return false;
             // return false;
             return base.CanConvertTo(context, destinationType);
         }
 
         public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         {
-            if (value is TValue tValue)
+            if (value is TU tValue)
             {
-                return ValueOf<TValue, TThis>.From(tValue);
+                return ValueOf<TU, T>.From(tValue);
             }
 
             return base.ConvertFrom(context, culture, value);
@@ -46,15 +46,15 @@ namespace ValueOf.Extensions
             if (value is null) return null;
 
 
-            if (destinationType == typeof(TValue))
+            if (destinationType == typeof(TU))
             {
-                return ((TThis)value).Value;
+                return ((T)value).Value;
             }
 
-            var typeofTValue = typeof(TValue);
-            var typeofTThis = typeof(TThis);
+            var typeofTValue = typeof(TU);
+            var typeofTThis = typeof(T);
 
-            var val = (TThis)value;
+            var val = (T)value;
             var underlyingVal = val.Value;
 
             Console.WriteLine($"{typeofTValue.Name} vs {typeofTThis.Name}: {underlyingVal}");

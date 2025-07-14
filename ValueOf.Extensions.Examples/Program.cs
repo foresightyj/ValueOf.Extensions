@@ -11,7 +11,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-    options.JsonSerializerOptions.Converters.Add(new ValueOfTypeConverterJsonAdapterFactory());
+    options.JsonSerializerOptions.Converters.Add(new ValueOfJsonAdapterFactory());
 #if DEBUG
     options.JsonSerializerOptions.WriteIndented = true;
 #endif

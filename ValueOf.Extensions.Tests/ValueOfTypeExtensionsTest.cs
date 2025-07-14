@@ -1,3 +1,5 @@
+using ValueOf.Extensions.Tests.Models;
+
 namespace ValueOf.Extensions.Tests;
 
 public class ValueOfTypeExtensionsTest

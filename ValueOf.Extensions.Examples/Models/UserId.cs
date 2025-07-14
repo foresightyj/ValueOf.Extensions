@@ -2,7 +2,6 @@ using System.ComponentModel;
 
 namespace ValueOf.Extensions.Examples.Models;
 
-[TypeConverter(typeof(ValueOfTypeConverter<int, UserId>))]
 public sealed class UserId : ValueOf<int, UserId>
 {
     protected override void Validate()
