@@ -25,10 +25,18 @@ public class ValueOfTypeConverterTest
         Assert.False(converter.CanConvertTo(null, typeof(string)));
 
         var expected = TestInt.From(12);
-
         var actual = (TestInt)converter.ConvertFrom(12)!;
         Assert.Equal(expected, actual);
-
         Assert.Equal(12, (int)converter.ConvertTo(expected, typeof(int))!);
+    }
+
+    [Fact]
+    public void TypeConverterWorks_For_String()
+    {
+        var converter = TypeDescriptor.GetConverter(typeof(TestInt));
+        Assert.NotNull(converter);
+        var expected = TestInt.From(12);
+        var actual = (TestInt)converter.ConvertFrom("12")!;
+        Assert.Equal(expected, actual);
     }
 }

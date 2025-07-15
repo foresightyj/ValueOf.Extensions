@@ -1,6 +1,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
 namespace ValueOf.Extensions
 {
@@ -31,6 +35,29 @@ namespace ValueOf.Extensions
             }
 
             return true;
+        }
+
+        private static void configureValueOfTypeConverters(IEnumerable<Type> types)
+        {
+            foreach (var valueOfType in types)
+            {
+                if (valueOfType.IsValueOfType(out var ut))
+                {
+                    var converterType =
+                        new TypeConverterAttribute(typeof(ValueOfTypeConverter<,>).MakeGenericType(ut!, valueOfType));
+                    TypeDescriptor.AddAttributes(valueOfType, converterType);
+                }
+            }
+        }
+
+        public static void ConfigureValueOfTypeConverters(params Type[] types)
+        {
+            configureValueOfTypeConverters(types);
+        }
+
+        public static void ConfigureValueOfTypeConverters(params Assembly[] assemblies)
+        {
+            configureValueOfTypeConverters(assemblies.SelectMany(a => a.DefinedTypes).Select(t => t.AsType()));
         }
     }
 }

@@ -7,7 +7,7 @@
         <Copyright>Yuan Jian</Copyright>
         <Title>Extra goodies for ValueOf, including serialization for System.Text.Json, Newtonsoft.json</Title>
         <PackageVersion>1.0.0</PackageVersion>
-        <LangVersion>8.0</LangVersion>
+        <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
         <PackageProjectUrl>https://github.com/foresightyj/ValueOf.Extensions</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/foresightyj/ValueOf.Extensions/blob/master/LICENSE</PackageLicenseUrl>
@@ -17,6 +17,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Dapper" Version="2.0.31" />
         <PackageReference Include="ValueOf" Version="2.0.31"/>
     </ItemGroup>
 

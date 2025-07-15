@@ -8,7 +8,7 @@ namespace ValueOf.Extensions
     {
         public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         {
-            if (sourceType == typeof(TU))
+            if (sourceType == typeof(TU) || sourceType == typeof(string))
             {
                 return true;
             }
@@ -18,15 +18,12 @@ namespace ValueOf.Extensions
 
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            var debug = $"{destinationType.Name} == {typeof(TU).Name} when {typeof(T).Name}";
-            Console.WriteLine(debug);
             if (destinationType == typeof(TU))
             {
                 return true;
             }
 
             if (typeof(TU) == typeof(int) && destinationType == typeof(string)) return false;
-            // return false;
             return base.CanConvertTo(context, destinationType);
         }
 
@@ -37,6 +34,12 @@ namespace ValueOf.Extensions
                 return ValueOf<TU, T>.From(tValue);
             }
 
+            if (value is string s)
+            {
+                var parsed = BuiltinTypeParser.Parse<TU>(s);
+                return ValueOf<TU, T>.From(parsed);
+            }
+
             return base.ConvertFrom(context, culture, value);
         }
 
@@ -45,19 +48,13 @@ namespace ValueOf.Extensions
         {
             if (value is null) return null;
 
-
             if (destinationType == typeof(TU))
             {
                 return ((T)value).Value;
             }
 
-            var typeofTValue = typeof(TU);
-            var typeofTThis = typeof(T);
-
             var val = (T)value;
             var underlyingVal = val.Value;
-
-            Console.WriteLine($"{typeofTValue.Name} vs {typeofTThis.Name}: {underlyingVal}");
 
             var converted = base.ConvertTo(context, culture, underlyingVal, destinationType);
             return converted;

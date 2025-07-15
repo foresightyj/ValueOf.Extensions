@@ -1,11 +1,18 @@
+using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 using ValueOf.Extensions;
+using ValueOf.Extensions.Dapper;
 using ValueOf.Extensions.Examples;
+using ValueOf.Extensions.Examples.Database;
 using ValueOf.Extensions.Examples.Models;
 using ValueOf.Extensions.SwashbuckleSwagger;
 
 var builder = WebApplication.CreateBuilder(args);
+
+ValueOfTypeExtensions.ConfigureValueOfTypeConverters(typeof(UserId).Assembly);
+ValueOfDapperExtensions.ConfigureValueOfDapperTypeHandlers(typeof(UserId).Assembly);
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -25,6 +32,8 @@ builder.Services.AddSwaggerGen(opts =>
     opts.UseAllOfForInheritance();
     opts.MapValueOfTypesInAssemblies(typeof(EmailAddress).Assembly);
 });
+
+builder.Services.AddDbContext<DemoDbContext>(opts => { opts.UseSqlite("Data Source=demo.db"); });
 
 var app = builder.Build();
 

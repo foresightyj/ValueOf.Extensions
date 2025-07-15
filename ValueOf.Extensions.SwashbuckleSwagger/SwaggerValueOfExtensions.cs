@@ -55,7 +55,6 @@ namespace ValueOf.Extensions.SwashbuckleSwagger
 
             foreach (var (t, underlyingType) in valueOfTypesPairs)
             {
-                if (!t.IsDefined(typeof(TypeConverterAttribute), false)) continue;
                 opts.MapType(t, () =>
                 {
                     var (type, format) = lookupMappedType(underlyingType, typeMapOverride);

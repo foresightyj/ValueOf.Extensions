@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace ValueOf.Extensions.Examples.Models;
+namespace ValueOf.Extensions.Examples;
 
 public sealed class UserId : ValueOf<int, UserId>
 {

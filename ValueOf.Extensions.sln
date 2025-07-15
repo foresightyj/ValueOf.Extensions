@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValueOf.Extensions.Swashbuc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValueOf.Extensions.NewtonsoftJson", "ValueOf.Extensions.NewtonsoftJson\ValueOf.Extensions.NewtonsoftJson.csproj", "{C1B26843-625E-4F1D-BA8B-035B96D5CBE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValueOf.Extensions.EFCore", "ValueOf.Extensions.EFCore\ValueOf.Extensions.EFCore.csproj", "{C06DC09A-9172-4DA4-B06B-75B3CDD3E4B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValueOf.Extensions.Dapper", "ValueOf.Extensions.Dapper\ValueOf.Extensions.Dapper.csproj", "{64E1ADD8-3129-436A-A206-41911382A660}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,13 @@ Global
 		{C1B26843-625E-4F1D-BA8B-035B96D5CBE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1B26843-625E-4F1D-BA8B-035B96D5CBE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1B26843-625E-4F1D-BA8B-035B96D5CBE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C06DC09A-9172-4DA4-B06B-75B3CDD3E4B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C06DC09A-9172-4DA4-B06B-75B3CDD3E4B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C06DC09A-9172-4DA4-B06B-75B3CDD3E4B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C06DC09A-9172-4DA4-B06B-75B3CDD3E4B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64E1ADD8-3129-436A-A206-41911382A660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64E1ADD8-3129-436A-A206-41911382A660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64E1ADD8-3129-436A-A206-41911382A660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64E1ADD8-3129-436A-A206-41911382A660}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
