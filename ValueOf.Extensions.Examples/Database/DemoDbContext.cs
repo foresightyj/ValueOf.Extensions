@@ -36,7 +36,7 @@ public class DemoDbContext : DbContext
         }
     }
 
-    private IList<User> getSeedUsers()
+    public static IList<User> getSeedUsers()
     {
         return new List<User>
         {

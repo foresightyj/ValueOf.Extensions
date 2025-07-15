@@ -11,6 +11,7 @@ using ValueOf.Extensions.SwashbuckleSwagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 ValueOfTypeExtensions.ConfigureValueOfTypeConverters(typeof(UserId).Assembly);
 ValueOfDapperExtensions.ConfigureValueOfDapperTypeHandlers(typeof(UserId).Assembly);
 
@@ -49,3 +50,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
