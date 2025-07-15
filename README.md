@@ -22,3 +22,4 @@ For Newtonsoft.Json, it is automatic.
 see [Document a System.Text.Json TypeConverter to JsonConverter Adapter · Issue #1761 · dotnet/runtime]( https://github.com/dotnet/runtime/issues/1761 )
 
 and [System.Text.Json does not support TypeConverters · Issue #38812 · dotnet/runtime]( https://github.com/dotnet/runtime/issues/38812 )
+
