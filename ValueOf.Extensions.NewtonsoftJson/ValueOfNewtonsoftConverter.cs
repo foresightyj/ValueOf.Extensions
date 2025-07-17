@@ -60,6 +60,11 @@ namespace ValueOf.Extensions.NewtonsoftJson
             JsonSerializer serializer)
         {
             var (underlyingType, wrapValueOf, _) = _cache.GetOrAdd(objectType, CacheValueFactory);
+            if (reader.TokenType == JsonToken.Null)
+            {
+                return null;
+            }
+
             var value = serializer.Deserialize(reader, underlyingType);
             return wrapValueOf(value);
         }

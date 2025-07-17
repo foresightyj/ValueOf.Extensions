@@ -19,10 +19,7 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
             var connection = new SqliteConnection("Data Source=:memory:");
             connection.Open(); // MUST keep open for lifetime of tests
 
-            x.AddDbContext<DemoDbContext>(options =>
-            {
-                options.UseSqlite(connection);
-            });
+            x.AddDbContext<DemoDbContext>(options => { options.UseSqlite(connection); });
 
             SeedTestData(x);
         });
