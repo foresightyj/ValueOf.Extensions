@@ -75,13 +75,16 @@ namespace ValueOf.Extensions.SwashbuckleSwagger
             }
         }
 
-        public static void MapValueOfTypesInAssemblies(this SwaggerGenOptions opts, params Assembly[] assemblies)
+        public static void MapValueOfTypesInAssemblies(this SwaggerGenOptions opts,
+            SwaggerTypeMap? typeMapOverride = null,
+            params Assembly[] assemblies
+        )
         {
             if (opts == null) throw new ArgumentNullException(nameof(opts));
             var valueOfTypes = from a in assemblies
                 from t in a.DefinedTypes.Select(t => t.AsType())
                 select t;
-            MapValueOfTypes(opts, valueOfTypes);
+            MapValueOfTypes(opts, valueOfTypes, typeMapOverride);
         }
     }
 }

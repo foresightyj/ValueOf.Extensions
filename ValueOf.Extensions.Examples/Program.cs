@@ -31,7 +31,7 @@ builder.Services.AddSwaggerGen(opts =>
     opts.IgnoreObsoleteActions();
     opts.IgnoreObsoleteProperties();
     opts.UseAllOfForInheritance();
-    opts.MapValueOfTypesInAssemblies(typeof(EmailAddress).Assembly);
+    opts.MapValueOfTypesInAssemblies(null, typeof(EmailAddress).Assembly);
 });
 
 builder.Services.AddDbContext<DemoDbContext>(opts => { opts.UseSqlite("Data Source=demo.db"); });
@@ -51,4 +51,6 @@ app.MapControllers();
 
 app.Run();
 
-public partial class Program { }
+public partial class Program
+{
+}

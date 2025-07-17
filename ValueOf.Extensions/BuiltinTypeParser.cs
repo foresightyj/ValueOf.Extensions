@@ -2,7 +2,7 @@ using System;
 
 namespace ValueOf.Extensions
 {
-    public static class BuiltinTypeParser
+    internal static class BuiltinTypeParser
     {
         private static class Cache<T>
         {
