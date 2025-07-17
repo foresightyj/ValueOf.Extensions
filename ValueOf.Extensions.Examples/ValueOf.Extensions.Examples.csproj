@@ -24,5 +24,4 @@
         <ProjectReference Include="..\ValueOf.Extensions.SwashbuckleSwagger\ValueOf.Extensions.SwashbuckleSwagger.csproj"/>
         <ProjectReference Include="..\ValueOf.Extensions\ValueOf.Extensions.csproj"/>
     </ItemGroup>
-
 </Project>

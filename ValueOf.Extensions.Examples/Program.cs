@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ValueOf.Extensions;
 using ValueOf.Extensions.Dapper;
@@ -31,7 +32,7 @@ builder.Services.AddSwaggerGen(opts =>
     opts.IgnoreObsoleteActions();
     opts.IgnoreObsoleteProperties();
     opts.UseAllOfForInheritance();
-    opts.MapValueOfTypesInAssemblies(typeof(EmailAddress).Assembly);
+    opts.MapValueOfTypesInAssemblies(null, typeof(EmailAddress).Assembly);
 });
 
 builder.Services.AddDbContext<DemoDbContext>(opts => { opts.UseSqlite("Data Source=demo.db"); });
@@ -49,6 +50,26 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/searchUsers",
+    async ([FromServices] DemoDbContext _dbContext, [FromQuery] UserId? userId, [FromQuery] EmailAddress? email) =>
+    {
+        IQueryable<User> q = _dbContext.Users;
+        if (userId != null)
+        {
+            q = q.Where(u => u.Id == userId);
+        }
+
+        if (email != null)
+        {
+            q = q.Where(u => u.Email == email);
+        }
+
+        return q.ToList();
+    });
+
+
 app.Run();
 
-public partial class Program { }
+public partial class Program
+{
+}
