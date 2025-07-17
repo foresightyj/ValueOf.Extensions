@@ -3,14 +3,11 @@
 
 name: .NET
 
-on: workflow_dispatch
-
 on:
+  workflow_dispatch:
   push:
     branches: [ "master" ]
-  # pull_request:
-  #   branches: [ "master" ]
-  tags: ['*']
+    tags: ['*']
 
 jobs:
   build:
