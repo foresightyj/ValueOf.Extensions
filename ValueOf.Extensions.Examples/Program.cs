@@ -50,22 +50,16 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/searchUsers",
-    async ([FromServices] DemoDbContext _dbContext, [FromQuery] UserId? userId, [FromQuery] EmailAddress? email) =>
+app.MapGet("/searchUsers", async ([FromServices] DemoDbContext dbContext, [FromQuery] UserId? userId) =>
+{
+    IQueryable<User> q = dbContext.Users;
+    if (userId != null)
     {
-        IQueryable<User> q = _dbContext.Users;
-        if (userId != null)
-        {
-            q = q.Where(u => u.Id == userId);
-        }
+        q = q.Where(u => u.Id == userId);
+    }
 
-        if (email != null)
-        {
-            q = q.Where(u => u.Email == email);
-        }
-
-        return q.ToList();
-    });
+    return q.ToList();
+});
 
 
 app.Run();

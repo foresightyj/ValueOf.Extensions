@@ -1,21 +1,32 @@
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace ValueOf.Extensions.Examples;
 
-public interface IValueOfParsable<TU, T> : IParsable<T> where T : ValueOf<TU, T>, IParsable<T>, new()
+public interface IParsableValueOf<TU, T> : IParsable<T> where T : ValueOf<TU, T>, IParsable<T>, new()
 {
-    public static T Parse(string s, IFormatProvider? provider)
+    static T IParsable<T>.Parse(string s, IFormatProvider? provider)
     {
-        throw new NotImplementedException();
+        var converter = TypeDescriptor.GetConverter(typeof(T));
+        return (T)converter.ConvertFrom(s)!;
     }
 
-    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out T result)
+    static bool IParsable<T>.TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider,
+        [MaybeNullWhen(false)] out T result)
     {
-        throw new NotImplementedException();
+        result = default(T);
+        var converter = TypeDescriptor.GetConverter(typeof(T));
+        if (converter.CanConvertFrom(typeof(string)))
+        {
+            result = (T)converter.ConvertFrom(s)!;
+            return true;
+        }
+
+        return false;
     }
 }
 
-public sealed class UserId : ValueOf<int, UserId>, IValueOfParsable<int, UserId>
+public sealed class UserId : ValueOf<int, UserId>, IParsableValueOf<int, UserId>
 {
     protected override void Validate()
     {
@@ -23,5 +34,4 @@ public sealed class UserId : ValueOf<int, UserId>, IValueOfParsable<int, UserId>
         if (userId <= 0)
             throw new ArgumentOutOfRangeException(nameof(userId) + $" must be positive integer but is: {userId}");
     }
-
 }
