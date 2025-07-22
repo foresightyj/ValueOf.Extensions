@@ -25,7 +25,7 @@ public class ApiIntegrationTests : IClassFixture<CustomWebApplicationFactory<Pro
     public async Task ValueOf_FromRoute_Works()
     {
         var client = _factory.CreateClient();
-        var response = await client.GetAsync($"Users/12");
+        var response = await client.GetAsync("Users/12");
 
         response.EnsureSuccessStatusCode(); // Status Code 200-299
         Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType!.ToString());
@@ -40,13 +40,29 @@ public class ApiIntegrationTests : IClassFixture<CustomWebApplicationFactory<Pro
     public async Task ValueOf_FromQuery_Works()
     {
         var client = _factory.CreateClient();
-        var response = await client.GetAsync($"Users/findByEmail?email=xiaobao@gmail.com");
+        var response = await client.GetAsync("Users/findByEmail?email=xiaobao@gmail.com");
 
         response.EnsureSuccessStatusCode(); // Status Code 200-299
         Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType!.ToString());
         var content = await response.Content.ReadAsStringAsync();
         var id = JsonDocument.Parse(content).RootElement.GetProperty("id").GetInt32();
         var email = JsonDocument.Parse(content).RootElement.GetProperty("email").GetString();
+        Assert.Equal(22, id);
+        Assert.Equal("xiaobao@gmail.com", email);
+    }
+
+    [Fact]
+    public async Task ValueOf_MinimalAPI_Works()
+    {
+        var client = _factory.CreateClient();
+        var response = await client.GetAsync("/searchUsers?userId=22");
+
+        response.EnsureSuccessStatusCode(); // Status Code 200-299
+        Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType!.ToString());
+        var content = await response.Content.ReadAsStringAsync();
+        var first = JsonDocument.Parse(content).RootElement.EnumerateArray().FirstOrDefault();
+        var id = first.GetProperty("id").GetInt32();
+        var email = first.GetProperty("email").GetString();
         Assert.Equal(22, id);
         Assert.Equal("xiaobao@gmail.com", email);
     }

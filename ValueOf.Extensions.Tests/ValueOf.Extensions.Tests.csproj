@@ -11,12 +11,16 @@
 
     <ItemGroup>
         <PackageReference Include="coverlet.collector" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.18" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.18"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
-        <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.6.24" />
-        <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
+        <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.6.24"/>
+        <PackageReference Include="System.Data.SQLite" Version="1.0.119"/>
         <PackageReference Include="xunit" Version="2.5.3"/>
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.XUnit" Version="1.1.1"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -24,9 +28,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ValueOf.Extensions.Dapper\ValueOf.Extensions.Dapper.csproj" />
-        <ProjectReference Include="..\ValueOf.Extensions.Examples\ValueOf.Extensions.Examples.csproj" />
+        <ProjectReference Include="..\ValueOf.Extensions.Dapper\ValueOf.Extensions.Dapper.csproj"/>
+        <ProjectReference Include="..\ValueOf.Extensions.Examples\ValueOf.Extensions.Examples.csproj"/>
         <ProjectReference Include="..\ValueOf.Extensions.NewtonsoftJson\ValueOf.Extensions.NewtonsoftJson.csproj"/>
+        <ProjectReference Include="..\ValueOf.Extensions.ParsableGenerator\ValueOf.Extensions.ParsableGenerator.csproj" />
         <ProjectReference Include="..\ValueOf.Extensions\ValueOf.Extensions.csproj"/>
     </ItemGroup>
 

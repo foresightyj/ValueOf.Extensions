@@ -21,6 +21,7 @@
     <ItemGroup>
         <ProjectReference Include="..\ValueOf.Extensions.Dapper\ValueOf.Extensions.Dapper.csproj"/>
         <ProjectReference Include="..\ValueOf.Extensions.EFCore\ValueOf.Extensions.EFCore.csproj"/>
+        <ProjectReference Include="..\ValueOf.Extensions.ParsableGenerator\ValueOf.Extensions.ParsableGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
         <ProjectReference Include="..\ValueOf.Extensions.SwashbuckleSwagger\ValueOf.Extensions.SwashbuckleSwagger.csproj"/>
         <ProjectReference Include="..\ValueOf.Extensions\ValueOf.Extensions.csproj"/>
     </ItemGroup>

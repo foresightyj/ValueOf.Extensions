@@ -12,7 +12,6 @@ using ValueOf.Extensions.SwashbuckleSwagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 ValueOfTypeExtensions.ConfigureValueOfTypeConverters(typeof(UserId).Assembly);
 ValueOfDapperExtensions.ConfigureValueOfDapperTypeHandlers(typeof(UserId).Assembly);
 
@@ -25,6 +24,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.WriteIndented = true;
 #endif
 });
+
+//for minimal apis
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+    options.SerializerOptions.Converters.Add(new ValueOfJsonAdapterFactory()));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opts =>
@@ -58,9 +61,9 @@ app.MapGet("/searchUsers", async ([FromServices] DemoDbContext dbContext, [FromQ
         q = q.Where(u => u.Id == userId);
     }
 
-    return q.ToList();
+    var res = await q.ToListAsync();
+    return res;
 });
-
 
 app.Run();
 

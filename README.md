@@ -82,9 +82,24 @@ If `type` & `format` picked for you doesn't suit your needs, you can use the `Sw
 
 NOTE: currently I only handled `Swashbuckle.AspNetCore`. Let me know or send me PR if you want integration for other Swagger/Open API solutions.
 
+# Package: ValueOf.Extensions.ParsableGenerator
+
+There are many ways to bind route or query parameters to your custom types in minimal APIs but unfortunately `TypeConverter` is not one of them. A non-generator solution would have worked if [this issue](https://github.com/dotnet/aspnetcore/issues/58136) is fixed. Anyway, this source code generator will generate methods implementing `IParsable<T>` for you automatically.
+
+You just need to include this nuget package & mark your ValueOf subclass as `partial`. 
+
+Additionally configure for System.Text.JSON as follows:
+
+```
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+    options.SerializerOptions.Converters.Add(new ValueOfJsonAdapterFactory()));
+```
+
+Note that System.Text.JSON configuration for Minimal APIs is different from that for the conventional controllers.
+
 # Examples
 
-The `ValueOf.Extensions.Examples` directory contains a ASP.NET Core
+Do check out the `ValueOf.Extensions.Examples` directory as it contains an comprehensive ASP.NET Core project demonstrating capabilities of all nuget packages in this project.
 
 # References
 

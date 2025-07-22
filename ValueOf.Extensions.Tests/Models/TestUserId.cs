@@ -1,6 +1,6 @@
 namespace ValueOf.Extensions.Tests.Models;
 
-public sealed class TestUserId : ValueOf<int, TestUserId>
+public sealed partial class TestUserId : ValueOf<int, TestUserId>
 {
     protected override void Validate()
     {
