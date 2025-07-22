@@ -3,15 +3,16 @@
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
         <PackageId>ValueOf.Extensions</PackageId>
+        <LangVersion>8</LangVersion>
         <Authors>Yuan Jian</Authors>
         <Copyright>Yuan Jian</Copyright>
         <Title>Extra goodies for ValueOf, including serialization for System.Text.Json, Newtonsoft.json</Title>
         <PackageVersion>1.0.0</PackageVersion>
-        <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
         <PackageProjectUrl>https://github.com/foresightyj/ValueOf.Extensions</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/foresightyj/ValueOf.Extensions/blob/master/LICENSE</PackageLicenseUrl>
-        <PackageTags>ValueOf, Value Object, ValueObject, DDD, Primitive Obsession, System.Text.Json</PackageTags>
+        <PackageTags>ValueOf, Value Object, ValueObject, DDD, Primitive Obsession, System.Text.Json, Dapper, EF.Core</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>

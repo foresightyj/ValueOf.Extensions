@@ -13,6 +13,7 @@
         <PackageLicenseUrl>https://github.com/foresightyj/ValueOf.Extensions/blob/master/LICENSE</PackageLicenseUrl>
         <PackageTags>ValueOf, Value Object, ValueObject, DDD, Primitive Obsession, System.Text.Json, Swagger</PackageTags>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
     <ItemGroup>
