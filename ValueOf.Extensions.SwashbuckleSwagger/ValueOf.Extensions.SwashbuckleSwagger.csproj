@@ -25,5 +25,6 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\ValueOf.Extensions\ValueOf.Extensions.csproj"/>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 </Project>
